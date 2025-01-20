@@ -1,1 +1,41 @@
 expression ::= equality
+
+expression     → literal
+               | unary
+               | binary
+               | grouping ;
+
+literal        → NUMBER | STRING | "true" | "false" | "nil" ;
+grouping       → "(" expression ")" ;
+unary          → ( "-" | "!" ) expression ;
+binary         → expression operator expression ;
+operator       → "==" | "!=" | "<" | "<=" | ">" | ">="
+               | "+"  | "-"  | "*" | "/" ;
+               
+5 - 3 - 1
+(5 - 3) - 1
+a = b = c
+a = (b = c)
+
+expression     → equality
+
+primary        → NUMBER | STRING | "true" | "false" | "nil"
+               | "(" expression ")" ;
+               
+unary          → ( "!" | "-" ) unary
+               | primary ;
+               
+print 0.1 * (0.2 * 0.3);
+print (0.1 * 0.2) * 0.3;
+
+factor         → unary ( ( "/" | "*" ) unary )* ;
+
+expression     → equality ;
+equality       → comparison ( ( "!=" | "==" ) comparison )* ;
+comparison     → term ( ( ">" | ">=" | "<" | "<=" ) term )* ;
+term           → factor ( ( "-" | "+" ) factor )* ;
+factor         → unary ( ( "/" | "*" ) unary )* ;
+unary          → ( "!" | "-" ) unary
+               | primary ;
+primary        → NUMBER | STRING | "true" | "false" | "nil"
+               | "(" expression ")" ;
